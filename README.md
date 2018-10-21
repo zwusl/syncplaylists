@@ -9,4 +9,4 @@ the track-files is preserved.
 
 Author:
 
-Werner Fürst , "mailto:werner.fuerst@gmx.at"
+Werner Fürst , mailto:werner.fuerst@gmx.at
