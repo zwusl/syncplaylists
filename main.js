@@ -66,7 +66,6 @@ exportSlot = function() {
 
             try{
                 trackfile = playlist_entries_devices [i] + playlist_entries_urls[i].substr(1);
-                trackrel = lastm3uPrefix + playlist_entries_urls[i].substr(1);
 
                 file = new QFile(trackfile);
                 fileinfo = new QFileInfo(file);
