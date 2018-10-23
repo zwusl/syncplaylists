@@ -56,8 +56,8 @@ exportSlot = function() {
                                     "from playlist_tracks p " +
                                     "left outer join urls on p.url=urls.uniqueid " +
                                     "left outer join devices on devices.id=urls.deviceid " +
-                                    "where p.playlist_id = " + plid) " +
-	    			    "order by p.track_num";
+                                    "where p.playlist_id = " + plid + " " +
+	    			    "order by p.track_num ");
 
         var playlist_entries_devices = entries.filter(function(val,index){return ((index % 2)===0)});
 
