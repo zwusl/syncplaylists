@@ -1,1 +1,4 @@
 theme: jekyll-theme-slate
+title: amarokscript syncplaylists
+description: sync (copy) playlists and their trackfiles to an local directory
+show_downloads: true
