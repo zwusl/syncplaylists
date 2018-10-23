@@ -1,6 +1,6 @@
 # syncplaylists
 
-An amarok script that enables you to sync selected playlist an their track-files to local directories.
+An amarok script that enables you to sync selected playlists and their track-files to local directories.
 
 Just run the script, and the menu item "sync Selected Playlists" 
 under "Tools" will appear. Select playlists and the track belonging to them
