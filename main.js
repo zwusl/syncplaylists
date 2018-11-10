@@ -31,6 +31,7 @@ var playlist_names=[];
 var lastTracksDir="";
 var lastPlaylistsDir="";
 var lastm3uPrefix="";
+var supportedVersion=0;
 
 exportSlot = function() {
     var list = this.dialog.musicGroupBox.listWidget;
@@ -52,13 +53,25 @@ exportSlot = function() {
 
         cntPlaylists++;
 
-        entries = Amarok.CollectionManager.query("select devices.lastmountpoint,urls.rpath " +
+        /*entries = Amarok.CollectionManager.query("select devices.lastmountpoint,urls.rpath " +*/
+	if (supportedVersion == 1)
+        {
+            entries = Amarok.CollectionManager.query("select devices.lastmountpoint,urls.rpath " +
                                     "from playlist_tracks p " +
                                     "left outer join urls on p.url=urls.uniqueid " +
                                     "left outer join devices on devices.id=urls.deviceid " +
                                     "where p.playlist_id = " + plid + " " +
 	    			    "order by p.track_num ");
-
+        }
+        else
+        {
+            entries = Amarok.Collection.query("select devices.lastmountpoint,urls.rpath " +
+                                    "from playlist_tracks p " +
+                                    "left outer join urls on p.url=urls.uniqueid " +
+                                    "left outer join devices on devices.id=urls.deviceid " +
+                                    "where p.playlist_id = " + plid + " " +
+	    			    "order by p.track_num ");
+        }
         var playlist_entries_devices = entries.filter(function(val,index){return ((index % 2)===0)});
 
         var playlist_entries_urls = entries.filter(function(val,index){return ((index % 2)===1)});
@@ -145,6 +158,18 @@ saveSlot = function()
 
 }
 
+function compareVersions (v1, v2)
+{
+    v1 = v1.split('.');
+    v2 = v2.split('.');
+    var longestLength = (v1.length > v2.length) ? v1.length : v2.length;
+    for (var i = 0; i < longestLength; i++) {
+        if (v1[i] != v2[i]) {
+            return (parseInt(v1) > parseInt(v2)) ? 1 : -1
+        }
+    }
+    return 0; 
+ }
 
 
 cancelSlot = function()
@@ -161,6 +186,12 @@ makeCallback = function()
 {
     Amarok.debug("-> Gui." + "show");
 
+    amarokVersion = Amarok.Info.version();
+
+    if (compareVersions(amarokVersion,"2.9.0")>=0)
+    {
+        supportedVersion = 1;
+    }
     lastTracksDir = Amarok.Script.readConfig("syncplaylists.lastTracksDir","/home/_not_set_");
     lastPlaylistsDir = Amarok.Script.readConfig("syncplaylists.lastPlaylistsDir","/home/_not_set_");
     lastm3uPrefix = Amarok.Script.readConfig("syncplaylists.lastm3uPrefix","../Music");
@@ -178,7 +209,14 @@ makeCallback = function()
     var m3uLine = this.dialog.syncGroupBox.m3uLine;
     m3uLine.setText(lastm3uPrefix);
 
-    result = Amarok.CollectionManager.query("select name,id from playlists");
+    if (supportedVersion == 1)
+    {
+        result = Amarok.CollectionManager.query("select name,id from playlists");
+    }
+    else
+    {
+        result = Amarok.Collection.query("select name,id from playlists");
+    }
 
     playlist_names = result.filter(function(val,index){return ((index % 2)===0)});
 
