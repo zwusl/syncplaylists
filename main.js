@@ -171,7 +171,6 @@ function compareVersions (v1, v2)
     return 0; 
  }
 
-
 cancelSlot = function()
 {
     Amarok.debug("-> Gui." + "browse");
