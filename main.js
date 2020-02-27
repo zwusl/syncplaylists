@@ -3,7 +3,7 @@
 #   A script that syncs selected playlists                                #
 #                                                                         #
 #   Copyright                                                             #
-#   (C) 2018 Werner Fürst werner@für.st                                   #
+#   (C) 2020 Werner Fürst werner@für.st                                   #
 #                                                                         #
 #   This program is free software; you can redistribute it and/or modify  #
 #   it under the terms of the GNU General Public License as published by  #
